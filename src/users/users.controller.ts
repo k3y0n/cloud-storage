@@ -16,7 +16,7 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
-  @Get()
+  @Get('me')
   @UseGuards(JwtAuthGuard)
   getMe(@UserId() id: number) {
     return this.usersService.findById(id);
