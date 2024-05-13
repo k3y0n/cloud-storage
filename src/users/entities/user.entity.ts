@@ -13,7 +13,7 @@ export class User {
   password: string;
 
   @Column()
-  fullName: string;
+  fullname: string;
 
   @OneToMany(() => File, (file) => file.user)
   files: File[];

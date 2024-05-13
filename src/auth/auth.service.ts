@@ -15,18 +15,13 @@ export class AuthService {
     email: string,
     password: string,
   ): Promise<Omit<User, 'password' | null>> {
-    try {
-      const user = await this.userService.findByEmail(email);
+    const user = await this.userService.findByEmail(email);
 
-      if (user && user.password === password) {
-        const { password, ...result } = user;
-        return result;
-      } else {
-        return null;
-      }
-    } catch (error) {
-      throw error;
+    if (user && user.password === password) {
+      const { password, ...result } = user;
+      return result;
     }
+    return null;
   }
 
   async register(dto: CreateUserDto) {
@@ -37,6 +32,7 @@ export class AuthService {
         token: this.jwtService.sign({ id: userData.id }),
       };
     } catch (error) {
+      console.error(error);
       throw new ForbiddenException('Error while register');
     }
   }
